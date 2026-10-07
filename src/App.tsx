@@ -70,7 +70,7 @@ export default function App() {
   // Register PWA service worker and capture install prompt
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();

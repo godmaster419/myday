@@ -1,9 +1,9 @@
 const CACHE_NAME = 'myday-v1';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/icon.svg',
-  '/manifest.json',
+  './',
+  './index.html',
+  './icon.svg',
+  './manifest.json',
 ];
 
 self.addEventListener('install', (event) => {

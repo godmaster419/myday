@@ -93,25 +93,113 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       <div className="space-y-5">
         {/* Appearance */}
         <section className="bg-white dark:bg-surface-850 rounded-2xl border border-surface-200 dark:border-surface-800 p-5 shadow-xs">
-          <h2 className="text-sm font-bold text-surface-900 dark:text-surface-100 mb-3 flex items-center gap-2">
-            <Sun className="w-4 h-4 text-primary-500" />
-            Appearance
-          </h2>
-          <div className="grid grid-cols-3 gap-2">
-            {themes.map(t => (
-              <button
-                key={t.value}
-                onClick={() => onUpdateSettings({ theme: t.value })}
-                className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                  settings.theme === t.value
-                    ? 'bg-primary-600 text-white shadow-sm'
-                    : 'bg-surface-50 dark:bg-surface-800 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700 border border-surface-200 dark:border-surface-700'
-                }`}
-              >
-                {t.icon}
-                {t.label}
-              </button>
-            ))}
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-bold text-surface-900 dark:text-surface-100 flex items-center gap-2">
+              <Sun className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+              Theme & Color Scheme
+            </h2>
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-primary-100 dark:bg-primary-950/60 text-primary-700 dark:text-primary-300">
+              {settings.theme === 'light' ? 'Cream Light' : settings.theme === 'dark' ? 'Warm Espresso' : 'System Auto'}
+            </span>
+          </div>
+          <p className="text-xs text-surface-500 dark:text-surface-400 mb-4">
+            Choose your preferred aesthetic. The app features a signature warm cream editorial design.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Cream Light */}
+            <button
+              onClick={() => onUpdateSettings({ theme: 'light' })}
+              className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                settings.theme === 'light'
+                  ? 'border-primary-600 ring-2 ring-primary-600/20 bg-primary-50/50 dark:bg-primary-950/30'
+                  : 'border-surface-200 dark:border-surface-700/80 bg-surface-50/60 dark:bg-surface-800/40 hover:bg-surface-100 dark:hover:bg-surface-800'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#E5DCCE] flex items-center justify-center text-primary-700 shadow-2xs">
+                    <Sun className="w-4 h-4" />
+                  </div>
+                  {settings.theme === 'light' && (
+                    <span className="w-2 h-2 rounded-full bg-primary-600" />
+                  )}
+                </div>
+                <p className="text-xs font-bold text-surface-900 dark:text-surface-100">
+                  Cream Light
+                </p>
+                <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-0.5 leading-snug">
+                  Warm organic ivory & linen aesthetic
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1.5 pt-2 border-t border-surface-200/60 dark:border-surface-700/60">
+                <span className="w-3.5 h-3.5 rounded-full bg-[#FAF7F2] border border-[#E5DCCE]" title="Cream Background" />
+                <span className="w-3.5 h-3.5 rounded-full bg-[#8E6422]" title="Caramel Accent" />
+                <span className="w-3.5 h-3.5 rounded-full bg-[#3D3328]" title="Espresso Text" />
+              </div>
+            </button>
+
+            {/* Warm Espresso Dark */}
+            <button
+              onClick={() => onUpdateSettings({ theme: 'dark' })}
+              className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                settings.theme === 'dark'
+                  ? 'border-primary-600 ring-2 ring-primary-600/20 bg-primary-50/50 dark:bg-primary-950/30'
+                  : 'border-surface-200 dark:border-surface-700/80 bg-surface-50/60 dark:bg-surface-800/40 hover:bg-surface-100 dark:hover:bg-surface-800'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="w-7 h-7 rounded-lg bg-[#16130F] border border-[#2D261E] flex items-center justify-center text-[#D6B97C] shadow-2xs">
+                    <Moon className="w-4 h-4" />
+                  </div>
+                  {settings.theme === 'dark' && (
+                    <span className="w-2 h-2 rounded-full bg-primary-600" />
+                  )}
+                </div>
+                <p className="text-xs font-bold text-surface-900 dark:text-surface-100">
+                  Warm Dark
+                </p>
+                <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-0.5 leading-snug">
+                  Deep roasted espresso & amber glow
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1.5 pt-2 border-t border-surface-200/60 dark:border-surface-700/60">
+                <span className="w-3.5 h-3.5 rounded-full bg-[#0E0C09] border border-[#2D261E]" title="Obsidian Background" />
+                <span className="w-3.5 h-3.5 rounded-full bg-[#D6B97C]" title="Amber Glow" />
+                <span className="w-3.5 h-3.5 rounded-full bg-[#FAF7F2]" title="Warm Pearl Text" />
+              </div>
+            </button>
+
+            {/* System Default */}
+            <button
+              onClick={() => onUpdateSettings({ theme: 'system' })}
+              className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                settings.theme === 'system'
+                  ? 'border-primary-600 ring-2 ring-primary-600/20 bg-primary-50/50 dark:bg-primary-950/30'
+                  : 'border-surface-200 dark:border-surface-700/80 bg-surface-50/60 dark:bg-surface-800/40 hover:bg-surface-100 dark:hover:bg-surface-800'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="w-7 h-7 rounded-lg bg-surface-100 dark:bg-surface-800 border border-surface-300 dark:border-surface-700 flex items-center justify-center text-surface-600 dark:text-surface-300 shadow-2xs">
+                    <Monitor className="w-4 h-4" />
+                  </div>
+                  {settings.theme === 'system' && (
+                    <span className="w-2 h-2 rounded-full bg-primary-600" />
+                  )}
+                </div>
+                <p className="text-xs font-bold text-surface-900 dark:text-surface-100">
+                  System Default
+                </p>
+                <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-0.5 leading-snug">
+                  Automatically match OS device preference
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1.5 pt-2 border-t border-surface-200/60 dark:border-surface-700/60">
+                <span className="text-[10px] text-surface-500 font-medium">Auto adapts</span>
+              </div>
+            </button>
           </div>
         </section>
 

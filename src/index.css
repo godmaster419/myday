@@ -1,32 +1,39 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-primary-50: #EEF2FF;
-  --color-primary-100: #E0E7FF;
-  --color-primary-200: #C7D2FE;
-  --color-primary-300: #A5B4FC;
-  --color-primary-400: #818CF8;
-  --color-primary-500: #6366F1;
-  --color-primary-600: #4F46E5;
-  --color-primary-700: #4338CA;
-  --color-primary-800: #3730A3;
-  --color-primary-900: #312E81;
+  /* Warm Caramel / Cognac Amber Accent */
+  --color-primary-50: #FAF5EB;
+  --color-primary-100: #F3E8D2;
+  --color-primary-200: #E6D2AA;
+  --color-primary-300: #D6B97C;
+  --color-primary-400: #C49C52;
+  --color-primary-500: #AC8033;
+  --color-primary-600: #8E6422;
+  --color-primary-700: #734F1B;
+  --color-primary-800: #593D15;
+  --color-primary-900: #422D11;
+  --color-primary-950: #291B09;
 
-  --color-surface-50: #F8FAFC;
-  --color-surface-100: #F1F5F9;
-  --color-surface-200: #E2E8F0;
-  --color-surface-300: #CBD5E1;
-  --color-surface-400: #94A3B8;
-  --color-surface-500: #64748B;
-  --color-surface-600: #475569;
-  --color-surface-700: #334155;
-  --color-surface-800: #1E293B;
-  --color-surface-900: #0F172A;
-  --color-surface-950: #020617;
+  /* Professional Cream, Warm Linen & Roasted Espresso Surfaces */
+  --color-surface-50: #FAF7F2;     /* Warm Cream Base Canvas */
+  --color-surface-100: #F3EDE4;    /* Warm Linen / Card Secondary */
+  --color-surface-150: #ECE4D8;    /* Warm Sand */
+  --color-surface-200: #E5DCCE;    /* Elegant Cream Border / Divider */
+  --color-surface-300: #D4C7B5;    /* Subtle Warm Outline */
+  --color-surface-400: #A89885;    /* Warm Muted Text */
+  --color-surface-500: #7A6C5B;    /* Warm Secondary Text */
+  --color-surface-600: #574B3D;    /* Warm Body Text */
+  --color-surface-700: #3D3328;    /* Deep Warm Headers */
+  --color-surface-800: #25201A;    /* Dark Mode Card Background */
+  --color-surface-850: #1D1914;    /* Dark Mode Elevated Surface */
+  --color-surface-900: #16130F;    /* Dark Mode Sidebar / Header */
+  --color-surface-950: #0E0C09;    /* Dark Mode Deep Espresso Obsidian Canvas */
 
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-danger: #EF4444;
+  --color-success: #15803D;
+  --color-warning: #B45309;
+  --color-danger: #DC2626;
 }
 
 /* Font */

@@ -21,8 +21,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ completed, total, labe
             style={{
               width: `${pct}%`,
               background: pct === 100
-                ? 'linear-gradient(90deg, #10B981, #059669)'
-                : 'linear-gradient(90deg, #6366F1, #818CF8)',
+                ? 'linear-gradient(90deg, #15803D, #16A34A)'
+                : 'linear-gradient(90deg, #8E6422, #C49C52)',
             }}
           />
         </div>

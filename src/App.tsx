@@ -8,6 +8,7 @@ import { useAppData } from './hooks/useAppData';
 import { getToday } from './utils/dateUtils';
 import { SearchBar } from './components/SearchBar';
 import { TaskForm } from './components/TaskForm';
+import { ThemeToggle } from './components/ThemeToggle';
 import { TodayView } from './pages/TodayView';
 import { WeeklyView } from './pages/WeeklyView';
 import { MonthlyView } from './pages/MonthlyView';
@@ -52,9 +53,12 @@ export default function App() {
     const root = document.documentElement;
     if (settings.theme === 'dark') {
       root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
     } else if (settings.theme === 'light') {
       root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
     } else {
+      root.setAttribute('data-theme', 'system');
       const mq = window.matchMedia('(prefers-color-scheme: dark)');
       const applyTheme = (isDark: boolean) => {
         if (isDark) root.classList.add('dark');
@@ -214,7 +218,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFBFE] dark:bg-surface-950 text-surface-900 dark:text-surface-100 transition-colors">
+    <div className="min-h-screen bg-[#FAF7F2] dark:bg-surface-950 text-surface-900 dark:text-surface-100 transition-colors selection:bg-primary-200 selection:text-primary-950">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 slide-up bg-surface-900 text-white dark:bg-white dark:text-surface-900 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold max-w-sm border border-surface-700/30">
@@ -224,11 +228,11 @@ export default function App() {
       )}
 
       {/* Desktop Sidebar (Section 22) */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 flex-col bg-white dark:bg-surface-900 border-r border-surface-200/80 dark:border-surface-800 z-30 shadow-xs">
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 flex-col bg-white/90 dark:bg-surface-900/95 backdrop-blur-md border-r border-surface-200/80 dark:border-surface-800 z-30 shadow-xs">
         {/* Brand Header */}
         <div className="p-6 border-b border-surface-100 dark:border-surface-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary-600 to-indigo-500 flex items-center justify-center shadow-sm shadow-primary-500/20">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary-700 via-primary-600 to-amber-600 flex items-center justify-center shadow-sm shadow-primary-900/10">
               <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="16" rx="3" />
                 <line x1="3" y1="10" x2="21" y2="10" />
@@ -304,6 +308,23 @@ export default function App() {
           </button>
         </nav>
 
+        {/* Theme Switcher in Desktop Sidebar */}
+        <div className="p-3 border-t border-surface-200/60 dark:border-surface-800">
+          <div className="flex items-center justify-between mb-1.5 px-1">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-surface-400 dark:text-surface-500">
+              Theme Mode
+            </span>
+            <span className="text-[10px] font-semibold text-primary-600 dark:text-primary-400 capitalize">
+              {settings.theme === 'light' ? 'Cream Light' : settings.theme === 'dark' ? 'Warm Dark' : 'System Auto'}
+            </span>
+          </div>
+          <ThemeToggle
+            currentTheme={settings.theme}
+            onThemeChange={(t) => updateSettings({ theme: t })}
+            variant="segmented"
+          />
+        </div>
+
         {/* PWA Install prompt in desktop sidebar if available */}
         {deferredPrompt && (
           <div className="px-4 py-2">
@@ -333,7 +354,7 @@ export default function App() {
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white/90 dark:bg-surface-900/90 backdrop-blur-md border-b border-surface-200/80 dark:border-surface-800 z-30">
         <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary-700 via-primary-600 to-amber-600 flex items-center justify-center shadow-xs">
               <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="16" rx="3" />
                 <line x1="3" y1="10" x2="21" y2="10" />
@@ -350,7 +371,12 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            <ThemeToggle
+              currentTheme={settings.theme}
+              onThemeChange={(t) => updateSettings({ theme: t })}
+              variant="compact"
+            />
             <SearchBar tasks={effectiveTasks} onSelectTask={handleSearchSelect} />
             <button
               onClick={() => setMobileMenu(!mobileMenu)}
@@ -421,6 +447,21 @@ export default function App() {
               <ChevronRight className="w-4 h-4 text-surface-300 dark:text-surface-600" />
             </button>
 
+            {/* Mobile Menu Theme Switcher */}
+            <div className="p-3 bg-surface-50 dark:bg-surface-850 rounded-2xl border border-surface-200/80 dark:border-surface-800 my-1">
+              <div className="flex items-center justify-between mb-2 px-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-surface-500">Theme</span>
+                <span className="text-[10px] font-semibold text-primary-600 dark:text-primary-400">
+                  {settings.theme === 'light' ? 'Cream Light' : settings.theme === 'dark' ? 'Warm Dark' : 'System Auto'}
+                </span>
+              </div>
+              <ThemeToggle
+                currentTheme={settings.theme}
+                onThemeChange={(t) => updateSettings({ theme: t })}
+                variant="segmented"
+              />
+            </div>
+
             {deferredPrompt && (
               <button
                 onClick={() => { handleInstallApp(); setMobileMenu(false); }}
@@ -468,12 +509,19 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="md:ml-64 pt-18 md:pt-4 pb-28 md:pb-12 min-h-screen">
-        {/* Desktop Top Bar with Search */}
-        <div className="hidden md:flex items-center justify-between px-8 py-3 mb-2 border-b border-surface-100 dark:border-surface-800/60 max-w-4xl mx-auto">
-          <p className="text-xs font-semibold text-surface-400 dark:text-surface-500">
+        {/* Desktop Top Bar with Search & Theme Toggle */}
+        <div className="hidden md:flex items-center justify-between px-8 py-3 mb-2 border-b border-surface-200/60 dark:border-surface-800/60 max-w-4xl mx-auto">
+          <p className="text-xs font-semibold text-surface-500 dark:text-surface-400">
             Plan Your Day. Complete Your Goals.
           </p>
-          <SearchBar tasks={effectiveTasks} onSelectTask={handleSearchSelect} />
+          <div className="flex items-center gap-2.5">
+            <ThemeToggle
+              currentTheme={settings.theme}
+              onThemeChange={(t) => updateSettings({ theme: t })}
+              variant="compact"
+            />
+            <SearchBar tasks={effectiveTasks} onSelectTask={handleSearchSelect} />
+          </div>
         </div>
 
         {/* View Component */}
